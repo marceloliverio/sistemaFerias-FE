@@ -1,0 +1,4 @@
+- [Stack Tecnologica](project_stack.md) — Vue 3 + TS strict + Vuetify 3 + vee-validate defineRule (sem Yup) + Pinia + Axios + Vite
+- [State Machine](project_state_machine.md) — Eventos reais ENVIAR/ANALISAR/APROVAR/REJEITAR/CONCLUIR, sem VOLTAR_RASCUNHO
+- [Contrato de API](project_api_contract.md) — Contrato REAL validado via /v3/api-docs (sem paginacao, sem /auth/me, sem PUT/DELETE)
+- [Roles Mockadas](project_roles_mock.md) — API nao expoe role; usuario/role sao mockados localmente a partir do JWT
