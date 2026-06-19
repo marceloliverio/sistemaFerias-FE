@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../core/theme/app_theme.dart';
 import '../application/vacation_notifier.dart';
 import '../domain/vacation_request.dart';
 import '../../../shared/widgets/error_view.dart';
@@ -17,7 +18,7 @@ class VacationListPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Solicitacoes de Ferias'),
+        title: const Text('SOLICITAÇÕES'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.go('/dashboard'),
@@ -34,7 +35,7 @@ class VacationListPage extends ConsumerWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.push('/vacations/new'),
         icon: const Icon(Icons.add),
-        label: const Text('Nova Solicitacao'),
+        label: const Text('Nova Solicitação'),
       ),
       body: vacationsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
@@ -45,12 +46,12 @@ class VacationListPage extends ConsumerWidget {
         data: (vacations) {
           if (vacations.isEmpty) {
             return EmptyView(
-              message: 'Nenhuma solicitacao encontrada.',
-              icon: Icons.beach_access,
+              message: 'Nenhuma solicitação encontrada.',
+              icon: Icons.beach_access_outlined,
               action: FilledButton.icon(
                 onPressed: () => context.push('/vacations/new'),
                 icon: const Icon(Icons.add),
-                label: const Text('Criar solicitacao'),
+                label: const Text('Criar solicitação'),
               ),
             );
           }
@@ -88,7 +89,7 @@ class _VacationCard extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -99,32 +100,30 @@ class _VacationCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       vacation.funcionarioNome,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
                             fontWeight: FontWeight.w600,
+                            color: AppColors.onSurface,
                           ),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
+                  const SizedBox(width: 8),
                   StatusBadge(status: vacation.status),
                 ],
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 6),
               Text(
                 'CPF: ${vacation.funcionarioCpf}',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onSurface
-                          .withValues(alpha: 0.6),
-                    ),
+                style: Theme.of(context).textTheme.bodySmall,
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 6),
               Row(
                 children: [
-                  const Icon(Icons.calendar_today, size: 14),
+                  const Icon(Icons.calendar_today_outlined,
+                      size: 13, color: AppColors.onSurfaceVariant),
                   const SizedBox(width: 4),
                   Text(
-                    '${vacation.dataInicio} ate ${vacation.dataFim}',
+                    '${vacation.dataInicio} até ${vacation.dataFim}',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
@@ -138,6 +137,7 @@ class _VacationCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontStyle: FontStyle.italic,
+                        color: AppColors.onSurfaceVariant,
                       ),
                 ),
               ],

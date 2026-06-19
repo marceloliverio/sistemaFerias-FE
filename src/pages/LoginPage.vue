@@ -1,78 +1,80 @@
 <template>
-  <VContainer fluid class="fill-height bg-background">
-    <VRow justify="center" align="center" class="fill-height">
-      <VCol cols="12" sm="8" md="5" lg="4">
-        <div class="text-center mb-8">
-          <VIcon icon="mdi-beach" size="64" color="primary" />
-          <h1 class="text-h5 font-weight-bold mt-3">Sistema de Férias</h1>
-          <p class="text-body-2 text-medium-emphasis mt-1">
-            Faça login para continuar
-          </p>
-        </div>
+  <div class="login-page">
+    <!-- Navy header -->
+    <div class="login-header">
+      <div class="login-logo-box">
+        <VIcon icon="mdi-shield-account-outline" size="40" color="white" />
+      </div>
+      <h1 class="login-title">SISTEMA DE FÉRIAS</h1>
+      <p class="login-subtitle">Solicitação e Gestão de Férias</p>
+    </div>
 
-        <VCard elevation="3">
-          <VCardText class="pa-6">
-            <VForm @submit.prevent="handleLogin">
-              <VRow>
-                <VCol cols="12">
-                  <Field v-slot="{ field, errors }" name="email" rules="required|email">
-                    <VTextField
-                      v-bind="field"
-                      v-model="form.email"
-                      label="E-mail"
-                      type="email"
-                      prepend-inner-icon="mdi-email-outline"
-                      :error-messages="errors"
-                      autocomplete="email"
-                    />
-                  </Field>
-                </VCol>
+    <!-- White card section -->
+    <div class="login-card-section">
+      <div class="login-card-inner">
+        <h2 class="text-h6 font-weight-semibold mb-1" style="color: #1D1B20;">Acesso ao Sistema</h2>
+        <p class="text-body-2 text-medium-emphasis mb-6">Informe suas credenciais para continuar</p>
 
-                <VCol cols="12">
-                  <Field v-slot="{ field, errors }" name="senha" rules="required|minLength:6">
-                    <VTextField
-                      v-bind="field"
-                      v-model="form.senha"
-                      label="Senha"
-                      :type="mostrarSenha ? 'text' : 'password'"
-                      prepend-inner-icon="mdi-lock-outline"
-                      :append-inner-icon="mostrarSenha ? 'mdi-eye-off' : 'mdi-eye'"
-                      :error-messages="errors"
-                      autocomplete="current-password"
-                      @click:append-inner="mostrarSenha = !mostrarSenha"
-                    />
-                  </Field>
-                </VCol>
-              </VRow>
+        <VForm @submit.prevent="handleLogin">
+          <VRow>
+            <VCol cols="12" class="pb-2">
+              <Field v-slot="{ field, errors }" name="email" rules="required|email">
+                <VTextField
+                  v-bind="field"
+                  v-model="form.email"
+                  label="E-mail"
+                  type="email"
+                  prepend-inner-icon="mdi-email-outline"
+                  :error-messages="errors"
+                  autocomplete="email"
+                />
+              </Field>
+            </VCol>
 
-              <VAlert
-                v-if="authStore.erro"
-                type="error"
-                variant="tonal"
-                density="compact"
-                class="mb-4"
-                closable
-                @click:close="authStore.limparErro()"
-              >
-                {{ authStore.erro }}
-              </VAlert>
+            <VCol cols="12" class="pb-2">
+              <Field v-slot="{ field, errors }" name="senha" rules="required|minLength:6">
+                <VTextField
+                  v-bind="field"
+                  v-model="form.senha"
+                  label="Senha"
+                  :type="mostrarSenha ? 'text' : 'password'"
+                  prepend-inner-icon="mdi-lock-outline"
+                  :append-inner-icon="mostrarSenha ? 'mdi-eye-off' : 'mdi-eye'"
+                  :error-messages="errors"
+                  autocomplete="current-password"
+                  @click:append-inner="mostrarSenha = !mostrarSenha"
+                />
+              </Field>
+            </VCol>
+          </VRow>
 
-              <VBtn
-                type="submit"
-                color="primary"
-                block
-                size="large"
-                :loading="authStore.loading"
-                class="mt-2"
-              >
-                Entrar
-              </VBtn>
-            </VForm>
-          </VCardText>
-        </VCard>
-      </VCol>
-    </VRow>
-  </VContainer>
+          <VAlert
+            v-if="authStore.erro"
+            type="error"
+            variant="tonal"
+            density="compact"
+            class="mb-4"
+            closable
+            @click:close="authStore.limparErro()"
+          >
+            {{ authStore.erro }}
+          </VAlert>
+
+          <VBtn
+            type="submit"
+            color="primary"
+            block
+            size="large"
+            rounded="pill"
+            :loading="authStore.loading"
+            class="mt-2"
+          >
+            Entrar
+          </VBtn>
+        </VForm>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -100,3 +102,65 @@ const handleLogin = handleSubmit(async () => {
   await router.push(redirect)
 })
 </script>
+
+<style scoped>
+.login-page {
+  min-height: 100vh;
+  background: #000E34;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-header {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+  text-align: center;
+}
+
+.login-logo-box {
+  width: 72px;
+  height: 72px;
+  background: #001754;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.login-title {
+  color: white;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin-bottom: 6px;
+}
+
+.login-subtitle {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  margin: 0;
+}
+
+.login-card-section {
+  flex: 3;
+  background: #fcfcfc;
+  border-radius: 24px 24px 0 0;
+  display: flex;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 32px 24px 40px;
+}
+
+.login-card-inner {
+  width: 100%;
+  max-width: 400px;
+}
+</style>

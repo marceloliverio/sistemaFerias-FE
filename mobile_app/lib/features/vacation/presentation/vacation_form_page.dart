@@ -87,7 +87,7 @@ class VacationFormPage extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Nova Solicitacao'),
+        title: const Text('NOVA SOLICITAÇÃO'),
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () => context.pop(),
@@ -250,12 +250,12 @@ class VacationFormPage extends HookConsumerWidget {
                       ? const SizedBox(
                           height: 18,
                           width: 18,
-                          child:
-                              CircularProgressIndicator(strokeWidth: 2),
+                          child: CircularProgressIndicator(
+                              strokeWidth: 2, color: Colors.white),
                         )
                       : const Icon(Icons.save_outlined),
                   label: Text(
-                    isSubmitting.value ? 'Salvando...' : 'Criar Solicitacao',
+                    isSubmitting.value ? 'Salvando...' : 'Criar Solicitação',
                   ),
                 ),
 

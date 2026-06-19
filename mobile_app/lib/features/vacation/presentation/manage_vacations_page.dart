@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../core/theme/app_theme.dart';
 import '../application/vacation_notifier.dart';
 import '../domain/vacation_request.dart';
 import '../../../shared/widgets/error_view.dart';
@@ -17,7 +18,7 @@ class ManageVacationsPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gerenciar Solicitacoes'),
+        title: const Text('GERENCIAR'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.go('/dashboard'),
@@ -65,8 +66,8 @@ class ManageVacationsPage extends ConsumerWidget {
               children: [
                 if (pending.isNotEmpty) ...[
                   _SectionHeader(
-                    title: 'Pendentes (${pending.length})',
-                    color: Theme.of(context).colorScheme.primary,
+                    title: 'PENDENTES (${pending.length})',
+                    color: AppColors.primary,
                   ),
                   const SizedBox(height: 8),
                   ...pending.map(
@@ -111,8 +112,8 @@ class ManageVacationsPage extends ConsumerWidget {
                 if (finished.isNotEmpty) ...[
                   const SizedBox(height: 16),
                   _SectionHeader(
-                    title: 'Encerradas (${finished.length})',
-                    color: Colors.grey,
+                    title: 'ENCERRADAS (${finished.length})',
+                    color: AppColors.onSurfaceVariant,
                   ),
                   const SizedBox(height: 8),
                   ...finished.map(
@@ -141,25 +142,22 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 4,
-          height: 20,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(2),
-          ),
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Text(
+        title,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 13,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.5,
         ),
-        const SizedBox(width: 8),
-        Text(
-          title,
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: color,
-              ),
-        ),
-      ],
+      ),
     );
   }
 }

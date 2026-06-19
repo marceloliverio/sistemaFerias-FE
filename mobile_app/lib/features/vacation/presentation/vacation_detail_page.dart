@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../core/theme/app_theme.dart';
 import '../application/vacation_notifier.dart';
 import '../domain/vacation_request.dart';
 import '../../../shared/widgets/error_view.dart';
@@ -20,7 +21,7 @@ class VacationDetailPage extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detalhes da Solicitacao'),
+        title: const Text('DETALHES'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.canPop() ? context.pop() : context.go('/vacations'),
@@ -177,11 +178,26 @@ class _DetailContent extends StatelessWidget {
           // Secao de acoes
           if (availableActions.isNotEmpty) ...[
             const SizedBox(height: 24),
-            Text(
-              'Acoes disponiveis',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
+            Row(
+              children: [
+                Container(
+                  width: 3,
+                  height: 18,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.circular(2),
                   ),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  'AÇÕES DISPONÍVEIS',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primary,
+                        letterSpacing: 0.8,
+                      ),
+                ),
+              ],
             ),
             const SizedBox(height: 12),
             ...availableActions.map(
@@ -329,7 +345,7 @@ class _InfoRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 18, color: Theme.of(context).colorScheme.primary),
+        Icon(icon, size: 18, color: AppColors.primary),
         const SizedBox(width: 8),
         Expanded(
           child: Column(

@@ -1,22 +1,42 @@
 <template>
   <div>
-    <div class="d-flex align-center justify-space-between mb-6">
-      <div>
-        <h1 class="text-h5 font-weight-bold">Dashboard</h1>
-        <p class="text-body-2 text-medium-emphasis">
-          Bem-vindo, {{ authStore.nomeUsuario }}
-        </p>
+    <!-- Welcome banner -->
+    <div
+      class="rounded-lg pa-5 mb-6"
+      style="background: linear-gradient(135deg, #000E34 0%, #001754 100%);"
+    >
+      <div class="d-flex align-center justify-space-between flex-wrap ga-3">
+        <div>
+          <p
+            class="text-caption text-uppercase font-weight-bold mb-1"
+            style="color: rgba(255,255,255,0.65); letter-spacing: 0.8px;"
+          >
+            Bem-vindo
+          </p>
+          <h2 class="text-h5 font-weight-bold text-white">{{ authStore.nomeUsuario }}</h2>
+          <p class="text-body-2 mt-1" style="color: rgba(255,255,255,0.75)">
+            Gerencie suas solicitações de férias
+          </p>
+        </div>
+        <VBtn
+          color="white"
+          variant="elevated"
+          prepend-icon="mdi-plus"
+          rounded="pill"
+          :to="{ name: 'nova-solicitacao' }"
+          style="color: #000E34;"
+        >
+          Nova Solicitação
+        </VBtn>
       </div>
-      <VBtn
-        color="primary"
-        prepend-icon="mdi-plus"
-        :to="{ name: 'nova-solicitacao' }"
-      >
-        Nova Solicitação
-      </VBtn>
     </div>
 
     <!-- Cards de resumo -->
+    <div class="section-header mb-4">
+      <div class="section-bar" />
+      <span class="text-body-1 font-weight-bold text-uppercase" style="letter-spacing: 0.8px;">Resumo</span>
+    </div>
+
     <VRow class="mb-6">
       <VCol
         v-for="card in cardsResumo"
@@ -41,16 +61,24 @@
       </VCol>
     </VRow>
 
-    <!-- Ultimas solicitacoes -->
+    <!-- Últimas solicitações -->
     <VRow>
       <VCol cols="12" md="8">
+        <div class="section-header mb-4">
+          <div class="section-bar" />
+          <span class="text-body-1 font-weight-bold text-uppercase" style="letter-spacing: 0.8px;">Solicitações Recentes</span>
+          <VSpacer />
+          <VBtn
+            variant="text"
+            size="small"
+            color="primary"
+            :to="{ name: 'minhas-solicitacoes' }"
+          >
+            Ver todas
+          </VBtn>
+        </div>
+
         <VCard>
-          <VCardTitle class="pa-4 pb-0 d-flex align-center justify-space-between">
-            <span>Minhas Solicitações Recentes</span>
-            <VBtn variant="text" size="small" :to="{ name: 'minhas-solicitacoes' }">
-              Ver todas
-            </VBtn>
-          </VCardTitle>
           <VCardText class="pa-4">
             <LoadingOverlay :loading="store.loading">
               <div v-if="solicitacoesRecentes.length" class="d-flex flex-column ga-3">
@@ -75,14 +103,19 @@
       </VCol>
 
       <VCol cols="12" md="4">
+        <div class="section-header mb-4">
+          <div class="section-bar" />
+          <span class="text-body-1 font-weight-bold text-uppercase" style="letter-spacing: 0.8px;">Fluxo de Estados</span>
+        </div>
+
         <VCard>
-          <VCardTitle class="pa-4 pb-0">Fluxo de Estados</VCardTitle>
           <VCardText class="pa-4">
             <div class="d-flex flex-column ga-2">
               <div
                 v-for="etapa in fluxoEstados"
                 :key="etapa.status"
-                class="d-flex align-center ga-3 pa-2 rounded-lg bg-grey-lighten-5"
+                class="d-flex align-center ga-3 pa-2 rounded-lg"
+                style="background: rgba(0,0,0,0.03);"
               >
                 <VAvatar :color="etapa.cor" variant="tonal" size="32">
                   <VIcon :icon="etapa.icone" size="16" />
@@ -169,3 +202,19 @@ onMounted(async () => {
   await store.buscarLista()
 })
 </script>
+
+<style scoped>
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-bar {
+  width: 3px;
+  height: 18px;
+  background: #000E34;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+</style>
